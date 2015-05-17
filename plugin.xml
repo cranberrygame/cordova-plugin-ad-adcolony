@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.cranberrygame.cordova.plugin.ad.video.adcolony"
+    version="1.0.0">
+	
+    <name>Cordova AdColony plugin</name>
+    <description>show adcolony full screen (static interstitial, video interstial), more apps, rewarded video ad???</description>
+    <author>Sang Ki Kwon (Cranberrygame)</author>	
+    <license>MIT</license>
+    <keywords>cordova,plugin,ad,video,adcolony,monetisation</keywords>
+    <repo>https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony</repo>
+    <issue>https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/issues</issue>	
+	<engines>
+	    <engine name="cordova" version=">=3.0.0" />
+	</engines>
+ 	
+    <js-module src="www/adcolony.js">
+        <clobbers target="window.adcolony" />
+    </js-module>    
+    
+	<!-- android -->
+	<platform name="android">
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="AdColonyPlugin">
+				<param name="android-package" value="com.cranberrygame.cordova.plugin.ad.video.adcolony.AdColonyPlugin"/>
+			</feature>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/*">
+			<uses-permission android:name="android.permission.INTERNET"/>
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+		</config-file>
+
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.jirbo.adcolony.AdColonyOverlay" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+			<activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.jirbo.adcolony.AdColonyFullscreen" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+			<activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.jirbo.adcolony.AdColonyBrowser" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+		</config-file>
+
+		<source-file src="src/android/AdColonyPlugin.java" target-dir="src/com/cranberrygame/cordova/plugin/ad/video/adcolony" />
+		<source-file src="src/android/adcolony.jar" target-dir="libs" />
+	</platform>
+
+	<!-- ios -->
+	<platform name="ios">
+		<config-file target="config.xml" parent="/*">
+			<feature name="AdColonyPlugin">
+				<param name="ios-package" value="AdColonyPlugin" />
+			</feature>
+		</config-file>
+
+		<header-file src="src/ios/AdColonyPlugin.h" />
+		<source-file src="src/ios/AdColonyPlugin.m" />
+
+		<framework src="src/ios/AdColony.framework" custom="true"/>
+		<framework src="AudioToolbox.framework" weak="true" />
+		<framework src="AdSupport.framework" weak="true" />
+		<framework src="AVFoundation.framework"/>
+		<framework src="CFNetwork.framework"/>
+		<framework src="CoreGraphics.framework" />
+		<framework src="CoreMedia.framework" />
+		<framework src="CoreTelephony.framework" />
+		<framework src="EventKit.framework" />
+		<framework src="EventKitUI.framework"/>
+		<framework src="Foundation.framework" />
+		<framework src="libz.1.2.5.dylib" />
+		<framework src="MediaPlayer.framework" />
+		<framework src="MessageUI.framework" />
+		<framework src="QuartzCore.framework" />
+		<framework src="Social.framework" weak="true"/>
+		<framework src="StoreKit.framework"/>
+		<framework src="SystemConfiguration.framework" />
+		<framework src="UIKit.framework" />
+		<framework src="WebKit.framework" />
+	</platform>
+</plugin>
