@@ -97,9 +97,6 @@ document.addEventListener("deviceready", function(){
 	window.adcolony.onRewardedVideoAdCompleted = function() {
 		alert('onRewardedVideoAdCompleted');
 	};
-	window.adcolony.onRewardedVideoAdNotCompleted = function() {
-		alert('onRewardedVideoAdNotCompleted');
-	};
 }, false);
 
 window.adcolony.showFullScreenAd('REPLACE_THIS_WITH_YOUR_ZONE_ID');
