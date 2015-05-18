@@ -15,7 +15,8 @@
 @synthesize licenseKey_;
 @synthesize validLicenseKey;
 static NSString *TEST_APP_ID = @"appea37823f227444bcb2";
-static NSString *TEST_ZONE_ID = @"vz173e673799ff46e4bc";
+static NSString *TEST_ZONE_ID_FULL_SCREEN_AD = @"vzc77c6ffd0b924e0283";
+static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
 //
 @synthesize appId;
 
@@ -110,7 +111,7 @@ static NSString *TEST_ZONE_ID = @"vz173e673799ff46e4bc";
 	if (!validLicenseKey) {
 		if (arc4random() % 100 <= 1) {//0 ~ 99		
 			self.appId = TEST_APP_ID;
-            zoneIds = [NSArray arrayWithObject: TEST_ZONE_ID];
+            zoneIds = [NSArray arrayWithObjects: TEST_ZONE_ID_FULL_SCREEN_AD, TEST_ZONE_ID_REWARDED_VIDEO_AD, nil];
 		}
 	}
 	
@@ -124,7 +125,7 @@ static NSString *TEST_ZONE_ID = @"vz173e673799ff46e4bc";
 	}
 */	
 	//+ ( void ) configureWithAppID:( NSString * )appID zoneIDs:( NSArray * )zoneIDs delegate:( id<AdColonyDelegate> )del logging:( BOOL )log;
-	[AdColony configureWithAppID:appId 
+	[AdColony configureWithAppID:self.appId 
 		zoneIDs:zoneIds
 		delegate:[[MyAdColonyDelegate alloc] initWithAdColonyPlugin:self]
 		logging:debug
@@ -132,6 +133,9 @@ static NSString *TEST_ZONE_ID = @"vz173e673799ff46e4bc";
 }
 
 -(void) _showFullScreenAd:(NSString *)zoneId {
+	if ([appId isEqualToString:TEST_APP_ID]) {
+		zoneId = TEST_ZONE_ID_FULL_SCREEN_AD;
+	}
 
     if (![AdColony videoAdCurrentlyRunning]) {
 		//+ ( void ) playVideoAdForZone:( NSString * )zoneID withDelegate:( id<AdColonyAdDelegate> )del;
@@ -142,6 +146,9 @@ static NSString *TEST_ZONE_ID = @"vz173e673799ff46e4bc";
 }
 
 -(void) _showRewardedVideoAd:(NSString *)zoneId {
+	if ([appId isEqualToString:TEST_APP_ID]) {
+		zoneId = TEST_ZONE_ID_REWARDED_VIDEO_AD;
+	}
 
     if (![AdColony videoAdCurrentlyRunning]) {
 		//+ ( void ) playVideoAdForZone:( NSString * )zoneID withDelegate:( id<AdColonyAdDelegate> )del withV4VCPrePopup:( BOOL )showPrePopup andV4VCPostPopup:( BOOL )showPostPopup;

@@ -107,7 +107,7 @@ alert(window.adcolony.isShowingFullScreenAd());//boolean: true or false
 alert(window.adcolony.isShowingRewardedVideoAd());//boolean: true or false
 ```
 # Examples #
-<a href="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/example/basic/index.html">example/basic/index.html</a><br>
+<a href="https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/blob/master/example/basic/index.html">example/basic/index.html</a><br>
 
 # Test #
 

@@ -97,7 +97,8 @@ public class AdColonyPlugin extends CordovaPlugin {
 	protected String licenseKey;
 	public boolean validLicenseKey;
 	protected String TEST_APP_ID = "app873c30909d2a4f8983";
-	protected String TEST_ZONE_ID = "vz139843d73804457784";
+	protected String TEST_ZONE_ID_FULL_SCREEN_AD = "vz8838953078cf4f12aa";
+	protected String TEST_ZONE_ID_REWARDED_VIDEO_AD = "vzc6760c29039a4f9fbf";
 	//
 	protected String appId;
 	
@@ -257,8 +258,9 @@ public class AdColonyPlugin extends CordovaPlugin {
 		if (!validLicenseKey) {
 			if (new Random().nextInt(100) <= 1) {//0~99					
 				this.appId = TEST_APP_ID;
-				zoneIds = new String[1];
-				zoneIds[0] = TEST_ZONE_ID;
+				zoneIds = new String[2];
+				zoneIds[0] = TEST_ZONE_ID_FULL_SCREEN_AD;
+				zoneIds[1] = TEST_ZONE_ID_REWARDED_VIDEO_AD;
 			}
 		}
 
@@ -282,18 +284,26 @@ public class AdColonyPlugin extends CordovaPlugin {
 		}
 */
 
-		AdColony.configure(cordova.getActivity(), optionString, appId, zoneIds);
+		AdColony.configure(cordova.getActivity(), optionString, this.appId, zoneIds);
 		AdColony.addAdAvailabilityListener(new MyAdColonyAdAvailabilityListener());
 		AdColony.addV4VCListener(new MyAdColonyV4VCListener());
 	}
 
 	private void _showFullScreenAd(String zoneId) {
+		if (appId.equals(TEST_APP_ID)) {
+			zoneId = TEST_ZONE_ID_FULL_SCREEN_AD;
+		}
+	
 		AdColonyVideoAd ad = new AdColonyVideoAd(zoneId);
 		ad.withListener(new AdColonyAdListenerFullScreenAd());
 		ad.show();
 	}
 
 	private void _showRewardedVideoAd(String zoneId) {
+		if (appId.equals(TEST_APP_ID)) {
+			zoneId = TEST_ZONE_ID_REWARDED_VIDEO_AD;
+		}
+		
 		AdColonyV4VCAd ad = new AdColonyV4VCAd(zoneId);
 		ad.withListener(new AdColonyAdListenerRewardedVideoAd());
 		//ad.withConfirmationDialog().withResultsDialog();
