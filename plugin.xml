@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="com.cranberrygame.cordova.plugin.ad.video.adcolony"
-    version="1.0.3">
+    id="com.cranberrygame.cordova.plugin.ad.adcolony"
+    version="1.0.10">
 	
     <name>Cordova AdColony plugin</name>
     <description>Show adcolony full screen ad and rewarded video ad</description>
     <author>Sang Ki Kwon (Cranberrygame)</author>	
     <license>MIT</license>
     <keywords>cordova,plugin,ad,video,adcolony,monetisation</keywords>
-    <repo>https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony</repo>
-    <issue>https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/issues</issue>	
+    <repo>https://github.com/cranberrygame/cordova-plugin-ad-adcolony</repo>
+    <issue>https://github.com/cranberrygame/cordova-plugin-ad-adcolony/issues</issue>	
 	<engines>
 	    <engine name="cordova" version=">=3.0.0" />
 	</engines>
@@ -23,7 +23,7 @@
 	<platform name="android">
 		<config-file target="res/xml/config.xml" parent="/*">
 			<feature name="AdColonyPlugin">
-				<param name="android-package" value="com.cranberrygame.cordova.plugin.ad.video.adcolony.AdColonyPlugin"/>
+				<param name="android-package" value="com.cranberrygame.cordova.plugin.ad.adcolony.AdColonyPlugin"/>
 			</feature>
 		</config-file>
 
@@ -38,7 +38,7 @@
 			<activity android:configChanges="keyboardHidden|orientation|screenSize" android:name="com.jirbo.adcolony.AdColonyBrowser" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
 		</config-file>
 
-		<source-file src="src/android/AdColonyPlugin.java" target-dir="src/com/cranberrygame/cordova/plugin/ad/video/adcolony" />
+		<source-file src="src/android/AdColonyPlugin.java" target-dir="src/com/cranberrygame/cordova/plugin/ad/adcolony" />
 		<source-file src="src/android/adcolony.jar" target-dir="libs" />
 	</platform>
 
