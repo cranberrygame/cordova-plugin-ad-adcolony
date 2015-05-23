@@ -21,21 +21,28 @@ You can see Plugins For Cordova in one page: http://cranberrygame.github.io?refe
 
 ## Cordova cli ##
 ```c
-cordova plugin add com.cranberrygame.cordova.plugin.ad.video.adcolony
+https://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface - npm install -g cordova@4.1.2
+
+cordova plugin add com.cranberrygame.cordova.plugin.ad.adcolony
 ```
 
 ## Xdk ##
 ```c
-XDK PORJECTS - your_xdk_project - CORDOVA 3.X HYBRID MOBILE APP SETTINGS - PLUGINS AND PERMISSIONS - Third Party Plugins - Add a Third Party Plugin - Get Plugin from the Web -
+https://software.intel.com/en-us/intel-xdk - Download XDK - XDK PORJECTS - [specific project] - CORDOVA 3.X HYBRID MOBILE APP SETTINGS - PLUGINS - Third Party Plugins - Add a Third Party Plugin - Get Plugin from the Web -
 
-Name: revmob
-Plugin ID: com.cranberrygame.cordova.plugin.ad.video.adcolony
+Name: adcolony
+Plugin ID: com.cranberrygame.cordova.plugin.ad.adcolony
 [v] Plugin is located in the Apache Cordova Plugins Registry
 ```
 
+## Cocoon ##
+https://cocoon.io - Create project - [specific project] - Setting - Plugins - Search - cranberrygame - adcolony
+
 ## Phonegap build service (config.xml) ##
 ```c
-<gap:plugin name="com.cranberrygame.cordova.plugin.ad.video.adcolony" source="plugins.cordova.io" />
+https://build.phonegap.com/ - Apps - [specific project] - Update code - Zip file including config.xml
+
+<gap:plugin name="com.cranberrygame.cordova.plugin.ad.adcolony" source="plugins.cordova.io" />
 ```
 
 ## Construct2 ##
@@ -46,13 +53,13 @@ Now all the native plugins are installed automatically: https://plus.google.com/
 ```c
 ```
 
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/blob/master/doc/app_id1.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/blob/master/doc/app_id2.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/blob/master/doc/app_id3.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/blob/master/doc/app_id4.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/blob/master/doc/app_id5.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/blob/master/doc/app_id6.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/blob/master/doc/app_id7.png">
+<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id1.png"><br>
+<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id2.png"><br>
+<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id3.png"><br>
+<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id4.png"><br>
+<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id5.png"><br>
+<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id6.png"><br>
+<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id7.png">
 
 test mode setting: 
 http://www.adcolony.com/ - Login - MONETISATION - [specific app] -[specific zone] - Development - Show test ads only (for dev or debug)? Yes No
@@ -60,7 +67,6 @@ http://www.adcolony.com/ - Login - MONETISATION - [specific app] -[specific zone
 # API #
 ```javascript
 var appId = "REPLACE_THIS_WITH_YOUR_APP_ID";
-
 /*
 var appId;
 //android
@@ -107,7 +113,7 @@ alert(window.adcolony.isShowingFullScreenAd());//boolean: true or false
 alert(window.adcolony.isShowingRewardedVideoAd());//boolean: true or false
 ```
 # Examples #
-<a href="https://github.com/cranberrygame/cordova-plugin-ad-video-adcolony/blob/master/example/basic/index.html">example/basic/index.html</a><br>
+<a href="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/example/basic/index.html">example/basic/index.html</a><br>
 
 # Test #
 
