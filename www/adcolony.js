@@ -96,7 +96,6 @@ module.exports = {
 	isShowingRewardedVideoAd: function() {
 		return this._isShowingRewardedVideoAd;
 	},
-	//
 	onFullScreenAdShown: null,
 	onFullScreenAdHidden: null,	
 	//

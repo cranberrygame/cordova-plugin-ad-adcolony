@@ -33,15 +33,16 @@ static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
 
 - (void) setUp: (CDVInvokedUrlCommand*)command {
     //self.viewController
-	//NSString *adUnit = [command.arguments objectAtIndex: 0];
-	//NSString *adUnitFullScreen = [command.arguments objectAtIndex: 1];
-	//BOOL isOverlap = [[command.arguments objectAtIndex: 2] boolValue];
-	//BOOL isTest = [[command.arguments objectAtIndex: 3] boolValue];
-	//NSArray *zoneIds = [command.arguments objectAtIndex:4];
-	//NSLog(@"%@", adUnit);
-	//NSLog(@"%@", adUnitFullScreen);
-	//NSLog(@"%d", isOverlap);
-	//NSLog(@"%d", isTest);
+    //self.webView	
+    //NSString *adUnitBanner = [command.arguments objectAtIndex: 0];
+    //NSString *adUnitFullScreen = [command.arguments objectAtIndex: 1];
+    //BOOL isOverlap = [[command.arguments objectAtIndex: 2] boolValue];
+    //BOOL isTest = [[command.arguments objectAtIndex: 3] boolValue];
+	//NSArray *zoneIds = [command.arguments objectAtIndex:4];	
+    //NSLog(@"%@", adUnitBanner);
+    //NSLog(@"%@", adUnitFullScreen);
+    //NSLog(@"%d", isOverlap);
+    //NSLog(@"%d", isTest);
 	NSString* appId = [command.arguments objectAtIndex:0];
 	NSArray *zoneIds = [command.arguments objectAtIndex:1];
 	NSLog(@"%@", appId);
@@ -80,13 +81,22 @@ static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
 	NSString *str2 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.ad.adcolony: %@", email]];
 	NSString *str3 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.ad.video.adcolony: %@", email]];
 	if(licenseKey_ != Nil && ([licenseKey_ isEqualToString:str1] || [licenseKey_ isEqualToString:str2] || [licenseKey_ isEqualToString:str3])){
-		NSLog(@"valid licenseKey");
-		validLicenseKey = YES;		
+		self.validLicenseKey = YES;
+		NSArray *excludedLicenseKeys = [NSArray arrayWithObjects: @"995f68522b89ea504577d93232db608c", nil];
+		for (int i = 0 ; i < [excludedLicenseKeys count] ; i++) {
+			if([[excludedLicenseKeys objectAtIndex:i] isEqualToString:licenseKey]) {
+				self.validLicenseKey = NO;
+				break;
+			}
+		}
 	}
 	else {
+		self.validLicenseKey = NO;
+	}
+	if (self.validLicenseKey)
+		NSLog(@"valid licenseKey");
+	else {
 		NSLog(@"invalid licenseKey");
-		validLicenseKey = NO;
-		
 		//UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Cordova AdColony: invalid email / license key. You can get free license key from https://play.google.com/store/apps/details?id=com.cranberrygame.pluginsforcordova" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		//[alert show];
 	}

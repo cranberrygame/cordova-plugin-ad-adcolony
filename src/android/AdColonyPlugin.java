@@ -176,21 +176,21 @@ public class AdColonyPlugin extends CordovaPlugin {
 		//args.getBoolean(0)
 		//args.getBoolean(1)
 		//JSONObject json = args.optJSONObject(0);
-		//json.optString("adUnit")
+		//json.optString("adUnitBanner")
 		//json.optString("adUnitFullScreen")
 		//JSONObject inJson = json.optJSONObject("inJson");
-		//final String adUnit = args.getString(0);
+		//final String adUnitBanner = args.getString(0);
 		//final String adUnitFullScreen = args.getString(1);				
 		//final boolean isOverlap = args.getBoolean(2);				
-		//final boolean isTest = args.getBoolean(3);	
+		//final boolean isTest = args.getBoolean(3);
 		//final String[] zoneIds = new String[args.getJSONArray(4).length()];
 		//for (int i = 0; i < args.getJSONArray(4).length(); i++) {
 		//	zoneIds[i] = args.getJSONArray(4).getString(i);
-		//}		
-		//Log.d(LOG_TAG, String.format("%s", adUnit));			
+		//}			
+		//Log.d(LOG_TAG, String.format("%s", adUnitBanner));			
 		//Log.d(LOG_TAG, String.format("%s", adUnitFullScreen));
 		//Log.d(LOG_TAG, String.format("%b", isOverlap));
-		//Log.d(LOG_TAG, String.format("%b", isTest));		
+		//Log.d(LOG_TAG, String.format("%b", isTest));	
 		final String appId = args.getString(0);
 		final String[] zoneIds = new String[args.getJSONArray(1).length()];
 		for (int i = 0; i < args.getJSONArray(1).length(); i++) {
@@ -241,15 +241,26 @@ public class AdColonyPlugin extends CordovaPlugin {
 		String str2 = Util.md5("com.cranberrygame.cordova.plugin.ad.adcolony: " + email);
 		String str3 = Util.md5("com.cranberrygame.cordova.plugin.ad.video.adcolony: " + email);
 		if(licenseKey != null && (licenseKey.equalsIgnoreCase(str1) || licenseKey.equalsIgnoreCase(str2) || licenseKey.equalsIgnoreCase(str3))) {
-			Log.d(LOG_TAG, String.format("%s", "valid licenseKey"));
 			this.validLicenseKey = true;
+			//
+			String[] excludedLicenseKeys = {"995f68522b89ea504577d93232db608c"};
+			for (int i = 0 ; i < excludedLicenseKeys.length ; i++) {
+				if (excludedLicenseKeys[i].equals(licenseKey)) {
+					this.validLicenseKey = false;
+					break;
+				}
+			}			
+			if (this.validLicenseKey)
+				Log.d(LOG_TAG, String.format("%s", "valid licenseKey"));
+			else
+				Log.d(LOG_TAG, String.format("%s", "invalid licenseKey"));
 		}
 		else {
 			Log.d(LOG_TAG, String.format("%s", "invalid licenseKey"));
-			this.validLicenseKey = false;
-			
-			//Util.alert(cordova.getActivity(),"Cordova AdColony: invalid email / license key. You can get free license key from https://play.google.com/store/apps/details?id=com.cranberrygame.pluginsforcordova");			
-		}		
+			this.validLicenseKey = false;			
+		}
+		//if (!this.validLicenseKey)
+		//	Util.alert(cordova.getActivity(),"Cordova AdColony: invalid email / license key. You can get free license key from https://play.google.com/store/apps/details?id=com.cranberrygame.pluginsforcordova");			
 	}
 	
 	private void _setUp(String appId, String[] zoneIds) {
