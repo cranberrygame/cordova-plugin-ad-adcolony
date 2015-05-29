@@ -1,5 +1,7 @@
 
 module.exports = {
+	_loadedFullScreenAd: false,
+	_loadedRewardedVideoAd: false,
 	_isShowingFullScreenAd: false,
 	_isShowingRewardedVideoAd: false,
 	//
@@ -13,12 +15,7 @@ module.exports = {
             [email, licenseKey]
         ); 
     },
-	setUp: function(appId, zoneIds) {
-		var zoneIdsArr = zoneIds.split(",");			
-		for (var i = 0 ; i < zoneIdsArr.length ; i++) {
-			zoneIdsArr[i] = zoneIdsArr[i].trim();			
-		}
-		
+	setUp: function(appId, fullScreenAdZoneId, rewardedVideoAdZoneId) {
 		var self = this;	
         cordova.exec(
 			function (result) {
@@ -26,7 +23,14 @@ module.exports = {
 				
 				if (typeof result == "string") {
 					//
+					if (result == "onFullScreenAdLoaded") {
+						self._loadedFullScreenAd = true;
+
+						if (self.onFullScreenAdLoaded)
+							self.onFullScreenAdLoaded();
+					}					
 					if (result == "onFullScreenAdShown") {
+						self._loadedFullScreenAd = false;
 						self._isShowingFullScreenAd = true;
 					
 						if (self.onFullScreenAdShown)
@@ -39,7 +43,14 @@ module.exports = {
 							self.onFullScreenAdHidden();
 					}
 					//
+					else if (result == "onRewardedVideoAdLoaded") {
+						self._loadedRewardedVideoAd = true;
+
+						if (self.onRewardedVideoAdLoaded)
+							self.onRewardedVideoAdLoaded();
+					}					
 					else if (result == "onRewardedVideoAdShown") {
+						self._loadedRewardedVideoAd = false;
 						self._isShowingRewardedVideoAd = true;
 					
 						if (self.onRewardedVideoAdShown)
@@ -69,36 +80,44 @@ module.exports = {
 			},
             'AdColonyPlugin',
             'setUp',			
-			[appId, zoneIdsArr]
+			[appId, fullScreenAdZoneId, rewardedVideoAdZoneId]
         ); 
     },
-    showFullScreenAd: function(zoneId) {
+    showFullScreenAd: function() {
 		cordova.exec(
  			null,
             null,
             'AdColonyPlugin',
             'showFullScreenAd',
-            [zoneId]
+            []
         ); 
     },
-    showRewardedVideoAd: function(zoneId) {
+    showRewardedVideoAd: function() {
 		cordova.exec(
 			null,
             null,
             'AdColonyPlugin',
             'showRewardedVideoAd',
-            [zoneId]
+            []
         ); 
     },
+	loadedFullScreenAd: function() {
+		return this._loadedFullScreenAd;
+	},
+	loadedRewardedVideoAd: function() {
+		return this._loadedRewardedVideoAd;
+	},
 	isShowingFullScreenAd: function() {
 		return this._isShowingFullScreenAd;
 	},
 	isShowingRewardedVideoAd: function() {
 		return this._isShowingRewardedVideoAd;
 	},
+	onFullScreenAdLoaded: null,
 	onFullScreenAdShown: null,
 	onFullScreenAdHidden: null,	
 	//
+	onRewardedVideoAdLoaded: null,
 	onRewardedVideoAdShown: null,
 	onRewardedVideoAdHidden: null,
 	onRewardedVideoAdCompleted: null

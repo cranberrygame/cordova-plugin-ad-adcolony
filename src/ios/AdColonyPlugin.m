@@ -19,6 +19,8 @@ static NSString *TEST_ZONE_ID_FULL_SCREEN_AD = @"vzc77c6ffd0b924e0283";
 static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
 //
 @synthesize appId;
+@synthesize fullScreenAdZoneId;
+@synthesize rewardedVideoAdZoneId;
 
 - (void) setLicenseKey: (CDVInvokedUrlCommand*)command {
     NSString *email = [command.arguments objectAtIndex: 0];
@@ -44,31 +46,30 @@ static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
     //NSLog(@"%d", isOverlap);
     //NSLog(@"%d", isTest);
 	NSString* appId = [command.arguments objectAtIndex:0];
-	NSArray *zoneIds = [command.arguments objectAtIndex:1];
+	NSString* fullScreenAdZoneId = [command.arguments objectAtIndex:1];
+	NSString* rewardedVideoAdZoneId = [command.arguments objectAtIndex:2];
 	NSLog(@"%@", appId);
+	NSLog(@"%@", fullScreenAdZoneId);
+	NSLog(@"%@", rewardedVideoAdZoneId);
 	
     self.callbackIdKeepCallback = command.callbackId;
 	
     //[self.commandDelegate runInBackground:^{
-		[self _setUp:appId zoneIds:zoneIds];	
+		[self _setUp:appId aFullScreenAdZoneId:fullScreenAdZoneId aRewardedVideoAdZoneId:rewardedVideoAdZoneId];	
     //}];
 }
 
 - (void) showFullScreenAd: (CDVInvokedUrlCommand*)command {
-	NSString* zoneId = [command.arguments objectAtIndex:0];
-	NSLog(@"%@", zoneId);
 
     [self.commandDelegate runInBackground:^{
-		[self _showFullScreenAd:zoneId];
+		[self _showFullScreenAd];
     }];
 }
 
 - (void) showRewardedVideoAd: (CDVInvokedUrlCommand*)command {
-	NSString* zoneId = [command.arguments objectAtIndex:0];
-	NSLog(@"%@", zoneId);
 
     [self.commandDelegate runInBackground:^{
-		[self _showRewardedVideoAd:zoneId];
+		[self _showRewardedVideoAd];
     }];
 }
 
@@ -82,7 +83,7 @@ static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
 	NSString *str3 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.ad.video.adcolony: %@", email]];
 	if(licenseKey_ != Nil && ([licenseKey_ isEqualToString:str1] || [licenseKey_ isEqualToString:str2] || [licenseKey_ isEqualToString:str3])){
 		self.validLicenseKey = YES;
-		NSArray *excludedLicenseKeys = [NSArray arrayWithObjects: @"995f68522b89ea504577d93232db608c", nil];
+		NSArray *excludedLicenseKeys = [NSArray arrayWithObjects: @"xxx", nil];
 		for (int i = 0 ; i < [excludedLicenseKeys count] ; i++) {
 			if([[excludedLicenseKeys objectAtIndex:i] isEqualToString:licenseKey]) {
 				self.validLicenseKey = NO;
@@ -115,13 +116,16 @@ static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
     return  output;
 }
 
-- (void) _setUp:(NSString *)appId zoneIds:(NSArray *)zoneIds {
+- (void) _setUp:(NSString *)appId aFullScreenAdZoneId:(NSString *)fullScreenAdZoneId aRewardedVideoAdZoneId:(NSString *)rewardedVideoAdZoneId {
 	self.appId = appId;
+	self.fullScreenAdZoneId = fullScreenAdZoneId;
+	self.rewardedVideoAdZoneId = rewardedVideoAdZoneId;
 
 	if (!validLicenseKey) {
 		if (arc4random() % 100 <= 1) {//0 ~ 99		
 			self.appId = TEST_APP_ID;
-            zoneIds = [NSArray arrayWithObjects: TEST_ZONE_ID_FULL_SCREEN_AD, TEST_ZONE_ID_REWARDED_VIDEO_AD, nil];
+			self.fullScreenAdZoneId = TEST_ZONE_ID_FULL_SCREEN_AD;
+			self.rewardedVideoAdZoneId = TEST_ZONE_ID_REWARDED_VIDEO_AD;
 		}
 	}
 	
@@ -134,6 +138,9 @@ static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
 		debug = [self toBool:[options objectForKey:@"debug"]];
 	}
 */	
+
+	NSArray* zoneIds = [NSArray arrayWithObjects: self.fullScreenAdZoneId, self.rewardedVideoAdZoneId, nil];
+	
 	//+ ( void ) configureWithAppID:( NSString * )appID zoneIDs:( NSArray * )zoneIDs delegate:( id<AdColonyDelegate> )del logging:( BOOL )log;
 	[AdColony configureWithAppID:self.appId 
 		zoneIDs:zoneIds
@@ -142,27 +149,21 @@ static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
 	];
 }
 
--(void) _showFullScreenAd:(NSString *)zoneId {
-	if ([appId isEqualToString:TEST_APP_ID]) {
-		zoneId = TEST_ZONE_ID_FULL_SCREEN_AD;
-	}
+-(void) _showFullScreenAd {
 
     if (![AdColony videoAdCurrentlyRunning]) {
 		//+ ( void ) playVideoAdForZone:( NSString * )zoneID withDelegate:( id<AdColonyAdDelegate> )del;
-        [AdColony playVideoAdForZone:zoneId 
+        [AdColony playVideoAdForZone:fullScreenAdZoneId 
 			withDelegate:[[AdColonyAdDelegateFullScreenAd alloc] initWithAdColonyPlugin:self]
 		];
     }	
 }
 
--(void) _showRewardedVideoAd:(NSString *)zoneId {
-	if ([appId isEqualToString:TEST_APP_ID]) {
-		zoneId = TEST_ZONE_ID_REWARDED_VIDEO_AD;
-	}
+-(void) _showRewardedVideoAd {
 
     if (![AdColony videoAdCurrentlyRunning]) {
 		//+ ( void ) playVideoAdForZone:( NSString * )zoneID withDelegate:( id<AdColonyAdDelegate> )del withV4VCPrePopup:( BOOL )showPrePopup andV4VCPostPopup:( BOOL )showPostPopup;
-        [AdColony playVideoAdForZone:zoneId
+        [AdColony playVideoAdForZone:rewardedVideoAdZoneId
 			withDelegate:[[AdColonyAdDelegateRewardedVideoAd alloc] initWithAdColonyPlugin:self]
 			//withV4VCPrePopup:YES 
 			//andV4VCPostPopup:YES
@@ -186,6 +187,25 @@ static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
 
 - (void)onAdColonyAdAvailabilityChange:(BOOL)available inZone:(NSString *)zoneId {
 	NSLog(@"%@: %d", @"onAdColonyAdAvailabilityChange", available);
+	
+	if (available) {	
+        if ([zoneId isEqualToString:self.adColonyPlugin.fullScreenAdZoneId]) {
+			CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onFullScreenAdLoaded"];
+			[pr setKeepCallbackAsBool:YES];
+			[adColonyPlugin.commandDelegate sendPluginResult:pr callbackId:adColonyPlugin.callbackIdKeepCallback];
+			//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+			//[pr setKeepCallbackAsBool:YES];
+			//[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];			
+		}
+        else if ([zoneId isEqualToString:self.adColonyPlugin.rewardedVideoAdZoneId]) {
+			CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onRewardedVideoAdLoaded"];
+			[pr setKeepCallbackAsBool:YES];
+			[adColonyPlugin.commandDelegate sendPluginResult:pr callbackId:adColonyPlugin.callbackIdKeepCallback];
+			//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+			//[pr setKeepCallbackAsBool:YES];
+			//[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];	
+		}		
+	}
 }
 
 - (void)onAdColonyV4VCReward:(BOOL)success currencyName:(NSString *)currencyName currencyAmount:(int)amount inZone:(NSString *)zoneId {

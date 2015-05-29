@@ -14,7 +14,9 @@
 @property BOOL validLicenseKey;
 //
 @property NSString *appId;
-
+@property NSString *fullScreenAdZoneId;
+@property NSString *rewardedVideoAdZoneId;
+	
 - (void) setLicenseKey: (CDVInvokedUrlCommand*)command;
 - (void) setUp:(CDVInvokedUrlCommand*)command;
 - (void) showFullScreenAd:(CDVInvokedUrlCommand*)command;

@@ -43,7 +43,7 @@ https://build.phonegap.com/ - Apps - [specific project] - Update code - Zip file
 ```
 
 ## Construct2 ##
-Download construct2 plugin: https://dl.dropboxusercontent.com/u/186681453/pluginsforcordova/adcolony/construct2.html
+Download construct2 plugin: http://www.paywithapost.de/pay?id=4ef3f2be-26e8-4a04-b826-6680db13a8c8
 <br>
 Now all the native plugins are installed automatically: https://plus.google.com/102658703990850475314/posts/XS5jjEApJYV
 # Server setting #
@@ -64,15 +64,23 @@ http://www.adcolony.com/ - Login - MONETISATION - [specific app] -[specific zone
 # API #
 ```javascript
 var appId = "REPLACE_THIS_WITH_YOUR_APP_ID";
+var fullScreenAdZoneId = "REPLACE_THIS_WITH_YOUR_FULL_SCREEN_AD_ZONE_ID";
+var rewardedVideoAdZoneId = "REPLACE_THIS_WITH_YOUR_REWARDED_VIDEO_AD_ZONE_ID";
 /*
 var appId;
+var fullScreenAdZoneId;
+var rewardedVideoAdZoneId;
 //android
 if (navigator.userAgent.match(/Android/i)) {
 	appId = "REPLACE_THIS_WITH_YOUR_APP_ID";
+	fullScreenAdZoneId = "REPLACE_THIS_WITH_YOUR_FULL_SCREEN_AD_ZONE_ID";
+	rewardedVideoAdZoneId = "REPLACE_THIS_WITH_YOUR_REWARDED_VIDEO_AD_ZONE_ID";
 }
 //ios
 else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
 	appId = "REPLACE_THIS_WITH_YOUR_APP_ID";
+	fullScreenAdZoneId = "REPLACE_THIS_WITH_YOUR_FULL_SCREEN_AD_ZONE_ID";
+	rewardedVideoAdZoneId = "REPLACE_THIS_WITH_YOUR_REWARDED_VIDEO_AD_ZONE_ID";
 }
 */
 
@@ -81,9 +89,12 @@ document.addEventListener("deviceready", function(){
 	//you can get free license key from https://play.google.com/store/apps/details?id=com.cranberrygame.pluginsforcordova
 	//window.adcolony.setLicenseKey("yourEmailId@yourEmaildDamin.com", "yourFreeLicenseKey");
 
-	window.adcolony.setUp(appId, "REPLACE_THIS_WITH_YOUR_ZONE_ID"); //zoneIds: ex1) "vz06e8c32a037749699e7050" ex2) "vz06e8c32a037749699e7050,vz1fd5a8b2bf6841a0a4b826"
+	window.adcolony.setUp(appId, fullScreenAdZoneId, rewardedVideoAdZoneId);
 	
 	//
+	window.adcolony.onFullScreenAdLoaded = function() {
+		alert('onFullScreenAdLoaded');
+	};	
 	window.adcolony.onFullScreenAdShown = function() {
 		alert('onFullScreenAdShown');
 	};
@@ -91,6 +102,9 @@ document.addEventListener("deviceready", function(){
 		alert('onFullScreenAdHidden');
 	};
 	//
+	window.adcolony.onRewardedVideoAdLoaded = function() {
+		alert('onRewardedVideoAdLoaded');
+	};	
 	window.adcolony.onRewardedVideoAdShown = function() {
 		alert('onRewardedVideoAdShown');
 	};
@@ -102,9 +116,12 @@ document.addEventListener("deviceready", function(){
 	};
 }, false);
 
-window.adcolony.showFullScreenAd('REPLACE_THIS_WITH_YOUR_ZONE_ID');
+window.adcolony.showFullScreenAd();
 
-window.adcolony.showRewardedVideoAd('REPLACE_THIS_WITH_YOUR_ZONE_ID');
+window.adcolony.showRewardedVideoAd();
+
+alert(window.adcolony.loadedFullScreenAd());//boolean: true or false
+alert(window.adcolony.loadedRewardedVideoAd());//boolean: true or false
 
 alert(window.adcolony.isShowingFullScreenAd());//boolean: true or false
 alert(window.adcolony.isShowingRewardedVideoAd());//boolean: true or false
