@@ -100,8 +100,8 @@ public class AdColonyPlugin extends CordovaPlugin {
 	protected String licenseKey;
 	public boolean validLicenseKey;
 	protected String TEST_APP_ID = "app873c30909d2a4f8983";
-	protected String TEST_ZONE_ID_FULL_SCREEN_AD = "vz8838953078cf4f12aa";
-	protected String TEST_ZONE_ID_REWARDED_VIDEO_AD = "vzc6760c29039a4f9fbf";
+	protected String TEST_FULL_SCREEN_AD_ZONE_ID = "vz8838953078cf4f12aa";
+	protected String TEST_REWARDED_VIDEO_AD_ZONE_ID = "vzc6760c29039a4f9fbf";
 	//
 	protected String appId;
 	protected String fullScreenAdZoneId;
@@ -264,7 +264,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 		//	Util.alert(cordova.getActivity(),"Cordova AdColony: invalid email / license key. You can get free license key from https://play.google.com/store/apps/details?id=com.cranberrygame.pluginsforcordova");			
 	}
 	
-	private void _setUp(String appId, fullScreenAdZoneId, rewardedVideoAdZoneId) {
+	private void _setUp(String appId, String fullScreenAdZoneId, String rewardedVideoAdZoneId) {
 		this.appId = appId;
 		this.fullScreenAdZoneId = fullScreenAdZoneId;
 		this.rewardedVideoAdZoneId = rewardedVideoAdZoneId;
@@ -272,8 +272,8 @@ public class AdColonyPlugin extends CordovaPlugin {
 		if (!validLicenseKey) {
 			if (new Random().nextInt(100) <= 1) {//0~99					
 				this.appId = TEST_APP_ID;
-				this.fullScreenAdZoneId = TEST_ZONE_ID_FULL_SCREEN_AD;
-				this.rewardedVideoAdZoneId = TEST_ZONE_ID_REWARDED_VIDEO_AD;
+				this.fullScreenAdZoneId = TEST_FULL_SCREEN_AD_ZONE_ID;
+				this.rewardedVideoAdZoneId = TEST_REWARDED_VIDEO_AD_ZONE_ID;
 			}
 		}
 
@@ -308,14 +308,14 @@ public class AdColonyPlugin extends CordovaPlugin {
 
 	private void _showFullScreenAd() {
 	
-		AdColonyVideoAd ad = new AdColonyVideoAd(fullScreenAdzoneId);
+		AdColonyVideoAd ad = new AdColonyVideoAd(fullScreenAdZoneId);
 		ad.withListener(new AdColonyAdListenerFullScreenAd());
 		ad.show();
 	}
 
 	private void _showRewardedVideoAd() {
 		
-		AdColonyV4VCAd ad = new AdColonyV4VCAd(rewardedVideoAdzoneId);
+		AdColonyV4VCAd ad = new AdColonyV4VCAd(rewardedVideoAdZoneId);
 		ad.withListener(new AdColonyAdListenerRewardedVideoAd());
 		//ad.withConfirmationDialog().withResultsDialog();
 		ad.show();

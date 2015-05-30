@@ -15,8 +15,8 @@
 @synthesize licenseKey_;
 @synthesize validLicenseKey;
 static NSString *TEST_APP_ID = @"appea37823f227444bcb2";
-static NSString *TEST_ZONE_ID_FULL_SCREEN_AD = @"vzc77c6ffd0b924e0283";
-static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
+static NSString *TEST_FULL_SCREEN_AD_ZONE_ID = @"vzc77c6ffd0b924e0283";
+static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
 //
 @synthesize appId;
 @synthesize fullScreenAdZoneId;
@@ -124,8 +124,8 @@ static NSString *TEST_ZONE_ID_REWARDED_VIDEO_AD = @"vzac89782a8e01437fbf";
 	if (!validLicenseKey) {
 		if (arc4random() % 100 <= 1) {//0 ~ 99		
 			self.appId = TEST_APP_ID;
-			self.fullScreenAdZoneId = TEST_ZONE_ID_FULL_SCREEN_AD;
-			self.rewardedVideoAdZoneId = TEST_ZONE_ID_REWARDED_VIDEO_AD;
+			self.fullScreenAdZoneId = TEST_FULL_SCREEN_AD_ZONE_ID;
+			self.rewardedVideoAdZoneId = TEST_REWARDED_VIDEO_AD_ZONE_ID;
 		}
 	}
 	
