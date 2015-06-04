@@ -17,17 +17,9 @@ import android.app.Activity;
 import android.util.Log;
 //
 import com.jirbo.adcolony.*;
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.LinearLayoutSoftKeyboardDetect;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import android.util.Log;
 import android.view.View;
 import java.util.Iterator;
 //md5
