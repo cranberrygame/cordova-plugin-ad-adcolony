@@ -20,9 +20,9 @@ You can see Plugins For Cordova in one page: http://cranberrygame.github.io?refe
 # Install plugin #
 
 ## Cordova cli ##
-https://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface - npm install -g cordova@4.1.2
+https://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface - npm install -g cordova@5.0.0
 ```c
-cordova plugin add com.cranberrygame.cordova.plugin.ad.adcolony
+cordova plugin add cordova-plugin-ad-adcolony
 ```
 
 ## Xdk ##
@@ -39,7 +39,7 @@ https://cocoon.io - Create project - [specific project] - Setting - Plugins - Cu
 ## Phonegap build service (config.xml) ##
 https://build.phonegap.com/ - Apps - [specific project] - Update code - Zip file including config.xml
 ```c
-<gap:plugin name="com.cranberrygame.cordova.plugin.ad.adcolony" source="plugins.cordova.io" />
+<gap:plugin name="cordova-plugin-ad-adcolony" source="npm" />
 ```
 
 ## Construct2 ##
@@ -50,13 +50,13 @@ Now all the native plugins are installed automatically: https://plus.google.com/
 ```c
 ```
 
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id1.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id2.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id3.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id4.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id5.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id6.png"><br>
-<img src="https://github.com/cranberrygame/cordova-plugin-ad-adcolony/blob/master/doc/app_id7.png">
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-ad-adcolony/master/doc/app_id1.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-ad-adcolony/master/doc/app_id2.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-ad-adcolony/master/doc/app_id3.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-ad-adcolony/master/doc/app_id4.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-ad-adcolony/master/doc/app_id5.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-ad-adcolony/master/doc/app_id6.png"><br>
+<img src="https://raw.githubusercontent.com/cranberrygame/cordova-plugin-ad-adcolony/master/doc/app_id7.png">
 
 test mode setting: 
 http://www.adcolony.com/ - Login - MONETISATION - [specific app] -[specific zone] - Development - Show test ads only (for dev or debug)? Yes No
