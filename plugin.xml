@@ -2,10 +2,10 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-ad-adcolony"
-    version="1.0.39">
+    version="1.0.40">
 	
     <name>Cordova AdColony plugin</name>
-    <description>Show adcolony full screen ad and rewarded video ad</description>
+    <description>Show adcolony interstitial ad and rewarded video ad</description>
     <author>Sang Ki Kwon (Cranberrygame)</author>	
     <license>MIT</license>
     <keywords>cordova,plugin,ad,video,adcolony,monetisation</keywords>

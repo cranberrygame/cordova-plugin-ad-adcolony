@@ -1,0 +1,39 @@
+{
+  "name": "cordova-plugin-ad-adcolony",
+  "version": "1.0.40",
+  "description": "Show adcolony interstitial ad and rewarded video ad",
+  "cordova": {
+    "id": "cordova-plugin-ad-adcolony",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cranberrygame/cordova-plugin-ad-adcolony.git"
+  },
+  "keywords": [
+    "cordova",
+    "plugin",
+    "ad",
+    "video",
+    "adcolony",
+    "monetisation",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "cranberrygame",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cranberrygame/cordova-plugin-ad-adcolony/issues"
+  },
+  "homepage": "https://github.com/cranberrygame/cordova-plugin-ad-adcolony#readme"
+}

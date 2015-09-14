@@ -99,8 +99,10 @@ public class AdColonyPlugin extends CordovaPlugin {
 	protected String fullScreenAdZoneId;
 	protected String rewardedVideoAdZoneId;
 	
-    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-		super.initialize(cordova, webView);
+    @Override
+	public void pluginInitialize() {
+		super.pluginInitialize();
+		//
     }
 	
 	//@Override
@@ -248,10 +250,12 @@ public class AdColonyPlugin extends CordovaPlugin {
 		this.licenseKey = licenseKey;
 		
 		//
-		String str1 = Util.md5("com.cranberrygame.cordova.plugin.: " + email);
-		String str2 = Util.md5("com.cranberrygame.cordova.plugin.ad.adcolony: " + email);
-		String str3 = Util.md5("com.cranberrygame.cordova.plugin.ad.video.adcolony: " + email);
-		if(licenseKey != null && (licenseKey.equalsIgnoreCase(str1) || licenseKey.equalsIgnoreCase(str2) || licenseKey.equalsIgnoreCase(str3))) {
+		String str1 = Util.md5("cordova-plugin-: " + email);
+		String str2 = Util.md5("cordova-plugin-ad-adcolony: " + email);
+		String str3 = Util.md5("com.cranberrygame.cordova.plugin.: " + email);
+		String str4 = Util.md5("com.cranberrygame.cordova.plugin.ad.adcolony: " + email);
+		String str5 = Util.md5("com.cranberrygame.cordova.plugin.ad.video.adcolony: " + email);
+		if(licenseKey != null && (licenseKey.equalsIgnoreCase(str1) || licenseKey.equalsIgnoreCase(str2) || licenseKey.equalsIgnoreCase(str3) || licenseKey.equalsIgnoreCase(str4) || licenseKey.equalsIgnoreCase(str5))) {
 			this.validLicenseKey = true;
 			//
 			String[] excludedLicenseKeys = {"xxx"};

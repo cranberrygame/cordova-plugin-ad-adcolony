@@ -22,6 +22,11 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
 @synthesize fullScreenAdZoneId;
 @synthesize rewardedVideoAdZoneId;
 
+- (void) pluginInitialize {
+    [super pluginInitialize];    
+    //
+}
+
 - (void) setLicenseKey: (CDVInvokedUrlCommand*)command {
     NSString *email = [command.arguments objectAtIndex: 0];
     NSString *licenseKey = [command.arguments objectAtIndex: 1];
@@ -78,10 +83,12 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
 	self.licenseKey_ = licenseKey;
 	
 	//
-	NSString *str1 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.: %@", email]];
-	NSString *str2 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.ad.adcolony: %@", email]];
-	NSString *str3 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.ad.video.adcolony: %@", email]];
-	if(licenseKey_ != Nil && ([licenseKey_ isEqualToString:str1] || [licenseKey_ isEqualToString:str2] || [licenseKey_ isEqualToString:str3])){
+	NSString *str1 = [self md5:[NSString stringWithFormat:@"cordova-plugin-: %@", email]];
+	NSString *str2 = [self md5:[NSString stringWithFormat:@"cordova-plugin-ad-adcolony: %@", email]];
+	NSString *str3 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.: %@", email]];
+	NSString *str4 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.ad.adcolony: %@", email]];
+	NSString *str5 = [self md5:[NSString stringWithFormat:@"com.cranberrygame.cordova.plugin.ad.video.adcolony: %@", email]];
+	if(licenseKey_ != Nil && ([licenseKey_ isEqualToString:str1] || [licenseKey_ isEqualToString:str2] || [licenseKey_ isEqualToString:str3] || [licenseKey_ isEqualToString:str4] || [licenseKey_ isEqualToString:str5])){
 		self.validLicenseKey = YES;
 		NSArray *excludedLicenseKeys = [NSArray arrayWithObjects: @"xxx", nil];
 		for (int i = 0 ; i < [excludedLicenseKeys count] ; i++) {
