@@ -8,13 +8,15 @@ Show adcolony full screen ad and rewarded video ad
 Requires adcolony account http://www.adcolony.com/
 
 AdColony Android SDK Version: 2.2.1 (Modified: 2014/2/10)
-AdColony iOS SDK Version: 2.5.1 (Modified: 2015/05/18)
+AdColony iOS SDK Version: 2.6.1 (Modified: 2016/01/14)
 
 This is open source cordova plugin.
 
-You can see Plugins For Cordova in one page: http://cranberrygame.github.io?referrer=github
+You can see Cordova Plugins in one page: http://cranberrygame.github.io?referrer=github
 
 # Change log #
+	2016.1.22
+	updated AdColony iOS SDK Version: 2.6.1
 ```c
 ```
 # Install plugin #
@@ -27,12 +29,10 @@ cordova plugin add cordova-plugin-ad-adcolony
 ```
 
 ## Xdk ##
-https://software.intel.com/en-us/intel-xdk - Download XDK - XDK PORJECTS - [specific project] - CORDOVA HYBRID MOBILE APP SETTINGS - Plugins - Third Party Plugins - Add a Third Party Plugin - Get Plugin from the Web -
+https://software.intel.com/en-us/intel-xdk - Download XDK - XDK PORJECTS - [specific project] - CORDOVA HYBRID MOBILE APP SETTINGS - Plugin Management - Add Plugins to this Project - Third Party Plugins -
 ```c
-Name: adcolony
+Plugin Source: Cordova plugin registry
 Plugin ID: cordova-plugin-ad-adcolony
-[Do not check] Plugin is located in the Apache Cordova Plugins Registry
-Repo URL: https://github.com/cranberrygame/cordova-plugin-ad-adcolony
 ```
 
 ## Cocoon ##
@@ -142,7 +142,7 @@ https://dl.dropboxusercontent.com/u/186681453/pluginsforcordova/adcolony/apk.htm
 
 # Useful links #
 
-Plugins For Cordova<br>
+Cordova Plugins<br>
 http://cranberrygame.github.io?referrer=github
 
 # Credits #
