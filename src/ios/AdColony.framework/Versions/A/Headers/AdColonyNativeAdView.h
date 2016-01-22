@@ -12,8 +12,6 @@
 @protocol AdColonyNativeAdDelegate;
 @class AdColonyAdInfo;
 
-NS_ASSUME_NONNULL_BEGIN
-
 #pragma mark - AdColonyNativeAdView
 
 /**
@@ -33,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Setting this property is optional; in many cases the callbacks provided by the delegate are not required to create a good user experience.
  * @param delegate The AdColonyNativeAdDelegate.
  */
-@property (nonatomic, weak, nullable) id<AdColonyNativeAdDelegate> delegate;
+@property (nonatomic, weak) id<AdColonyNativeAdDelegate> delegate;
 
 /** @name Creative Content and User Interface */
 
@@ -45,11 +43,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString* advertiserName;
 
 /**
- * The advertiser's icon for this ad (may be `nil`). Typically 200x200 pixels for Retina display at up to 100x100 screen points.
+ * The advertiser's icon for this ad. Typically 200x200 pixels for Retina display at up to 100x100 screen points.
  * Display of this image is optional.
  * @param advertiserIrcon The icon of this ad's advertiser.
  */
-@property (nonatomic, readonly, nullable) UIImage* advertiserIcon;
+@property (nonatomic, readonly) UIImage* advertiserIcon;
 
 /**
  * A short title for this ad. Approximately 25 characters.
@@ -66,11 +64,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString* adDescription;
 
 /**
- * The engagement button for this ad (may be `nil`). This is automatically displayed beneath the video component.
+ * The engagement button for this ad (may be nil). This is automatically displayed beneath the video component.
  * Use this property to access the UIButton and customize anything about it except its title text and tap action.
  * @param engagementButton The engagement button that is already embedded within this ad.
  */
-@property (nonatomic, nullable) UIButton* engagementButton;
+@property (nonatomic, readonly) UIButton* engagementButton;
 
 /**
  * Returns the recommended height for the AdColonyNativeAdView if it will be displayed at the specified width.
@@ -114,6 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
  * This method must be used to undo a previous corresponding call to `pause`.
  */
 -(void)resume;
+
 @end
 
 #pragma mark - AdColonyNativeAdDelegate
@@ -123,7 +122,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @protocol AdColonyNativeAdDelegate <NSObject>
 @optional
-
 /**
  * Notifies your app that a native ad has begun displaying its video content in response to being displayed on screen.
  * @param ad The affected native ad view.
@@ -147,10 +145,10 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)onAdColonyNativeAdFinished:(AdColonyNativeAdView*)ad expanded:(BOOL)expanded;
 
 /**
- * Alternative for `[AdColonyNativeAdDelegate onAdColonyNativeAdFinished:expanded]` that passes an AdColonyAdInfo object to the delegate. The AdColonyAdInfo object can be queried
+ * Alternative for `- onAdColonyNativeAdFinished:expanded` that passes an AdColonyAdInfo object to the delegate. The AdColonyAdInfo object can be queried
  * for information about the ad session: whether or not the ad was shown, the associated zone ID, whether or not the video was an In-App Purchase Promo (IAPP),
  * the type of engagement that triggered an IAP, etc. If your application is showing IAPP advertisements, you will need to implement this callback
- * instead of `[AdColonyNativeAdDelegate onAdColonyNativeAdFinished:expanded]` so you can decide what action to take once the ad has completed.
+ * instead of `- onAdColonyNativeAdFinished:expanded` so you can decide what action to take once the ad has completed.
  * @param ad The affected native ad view.
  * @param info An AdColonyAdInfo object containing information about the associated ad.
  * @see AdColonyAdInfo
@@ -170,5 +168,3 @@ NS_ASSUME_NONNULL_BEGIN
  */
 -(void)onAdColonyNativeAdEngagementPressed:(AdColonyNativeAdView*)ad expanded:(BOOL)expanded;
 @end
-
-NS_ASSUME_NONNULL_END
