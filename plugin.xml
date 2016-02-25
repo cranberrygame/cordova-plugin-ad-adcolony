@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-ad-adcolony"
-    version="1.0.41">
+    version="1.0.42">
 	
     <name>Cordova AdColony plugin</name>
     <description>Show adcolony interstitial ad and rewarded video ad</description>
@@ -15,7 +15,7 @@
 	    <engine name="cordova" version=">=3.0.0" />
 	</engines>
  	
-    <js-module src="www/adcolony.js">
+    <js-module src="www/adcolony.js" name="adcolony">
         <clobbers target="window.adcolony" />
     </js-module>    
     

@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-ad-adcolony",
-  "version": "1.0.41",
+  "version": "1.0.42",
   "description": "Show adcolony interstitial ad and rewarded video ad",
   "cordova": {
     "id": "cordova-plugin-ad-adcolony",
