@@ -68,7 +68,7 @@ http://www.adcolony.com/ - Login - MONETISATION - [specific app] -[specific zone
 # API #
 ```javascript
 var appId = "REPLACE_THIS_WITH_YOUR_APP_ID";
-var InterstitialAdZoneId = "REPLACE_THIS_WITH_YOUR_INTERSTITIAL_AD_ZONE_ID";
+var interstitialAdZoneId = "REPLACE_THIS_WITH_YOUR_INTERSTITIAL_AD_ZONE_ID";
 var rewardedVideoAdZoneId = "REPLACE_THIS_WITH_YOUR_REWARDED_VIDEO_AD_ZONE_ID";
 /*
 var appId;
