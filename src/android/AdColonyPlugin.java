@@ -92,11 +92,11 @@ public class AdColonyPlugin extends CordovaPlugin {
 	protected String licenseKey;
 	public boolean validLicenseKey;
 	protected String TEST_APP_ID = "app873c30909d2a4f8983";
-	protected String TEST_FULL_SCREEN_AD_ZONE_ID = "vz8838953078cf4f12aa";
+	protected String TEST_INTERSTITIAL_AD_ZONE_ID = "vz8838953078cf4f12aa";
 	protected String TEST_REWARDED_VIDEO_AD_ZONE_ID = "vzc6760c29039a4f9fbf";
 	//
 	protected String appId;
-	protected String fullScreenAdZoneId;
+	protected String interstitialAdZoneId;
 	protected String rewardedVideoAdZoneId;
 	
     @Override
@@ -154,8 +154,8 @@ public class AdColonyPlugin extends CordovaPlugin {
 
 			return true;
 		}			
-		else if (action.equals("showFullScreenAd")) {
-			showFullScreenAd(action, args, callbackContext);
+		else if (action.equals("showInterstitialAd")) {
+			showInterstitialAd(action, args, callbackContext);
 						
 			return true;
 		}
@@ -194,10 +194,10 @@ public class AdColonyPlugin extends CordovaPlugin {
 		//args.getBoolean(1)
 		//JSONObject json = args.optJSONObject(0);
 		//json.optString("adUnitBanner")
-		//json.optString("adUnitFullScreen")
+		//json.optString("adUnitInterstitial")
 		//JSONObject inJson = json.optJSONObject("inJson");
 		//final String adUnitBanner = args.getString(0);
-		//final String adUnitFullScreen = args.getString(1);				
+		//final String adUnitInterstitial = args.getString(1);				
 		//final boolean isOverlap = args.getBoolean(2);				
 		//final boolean isTest = args.getBoolean(3);
 		//final String[] zoneIds = new String[args.getJSONArray(4).length()];
@@ -205,14 +205,14 @@ public class AdColonyPlugin extends CordovaPlugin {
 		//	zoneIds[i] = args.getJSONArray(4).getString(i);
 		//}			
 		//Log.d(LOG_TAG, String.format("%s", adUnitBanner));			
-		//Log.d(LOG_TAG, String.format("%s", adUnitFullScreen));
+		//Log.d(LOG_TAG, String.format("%s", adUnitInterstitial));
 		//Log.d(LOG_TAG, String.format("%b", isOverlap));
 		//Log.d(LOG_TAG, String.format("%b", isTest));	
 		final String appId = args.getString(0);
-		final String fullScreenAdZoneId = args.getString(1);
+		final String interstitialAdZoneId = args.getString(1);
 		final String rewardedVideoAdZoneId = args.getString(2);
 		Log.d(LOG_TAG, String.format("%s", appId));			
-		Log.d(LOG_TAG, String.format("%s", fullScreenAdZoneId));			
+		Log.d(LOG_TAG, String.format("%s", interstitialAdZoneId));			
 		Log.d(LOG_TAG, String.format("%s", rewardedVideoAdZoneId));			
 		
 		callbackContextKeepCallback = callbackContext;
@@ -220,17 +220,17 @@ public class AdColonyPlugin extends CordovaPlugin {
 		cordova.getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				_setUp(appId, fullScreenAdZoneId, rewardedVideoAdZoneId);
+				_setUp(appId, interstitialAdZoneId, rewardedVideoAdZoneId);
 			}
 		});
 	}
 	
-	private void showFullScreenAd(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+	private void showInterstitialAd(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
 		cordova.getActivity().runOnUiThread(new Runnable(){
 			@Override
 			public void run() {
-				_showFullScreenAd();
+				_showInterstitialAd();
 			}
 		});
 	}
@@ -278,15 +278,15 @@ public class AdColonyPlugin extends CordovaPlugin {
 		//	Util.alert(cordova.getActivity(),"Cordova AdColony: invalid email / license key. You can get free license key from https://play.google.com/store/apps/details?id=com.cranberrygame.pluginsforcordova");			
 	}
 	
-	private void _setUp(String appId, String fullScreenAdZoneId, String rewardedVideoAdZoneId) {
+	private void _setUp(String appId, String interstitialAdZoneId, String rewardedVideoAdZoneId) {
 		this.appId = appId;
-		this.fullScreenAdZoneId = fullScreenAdZoneId;
+		this.interstitialAdZoneId = interstitialAdZoneId;
 		this.rewardedVideoAdZoneId = rewardedVideoAdZoneId;
 				
 		if (!validLicenseKey) {
 			if (new Random().nextInt(100) <= 1) {//0~99					
 				this.appId = TEST_APP_ID;
-				this.fullScreenAdZoneId = TEST_FULL_SCREEN_AD_ZONE_ID;
+				this.interstitialAdZoneId = TEST_INTERSTITIAL_AD_ZONE_ID;
 				this.rewardedVideoAdZoneId = TEST_REWARDED_VIDEO_AD_ZONE_ID;
 			}
 		}
@@ -312,7 +312,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 */
 
 		String[] zoneIds = new String[2];
-		zoneIds[0] = this.fullScreenAdZoneId;
+		zoneIds[0] = this.interstitialAdZoneId;
 		zoneIds[1] = this.rewardedVideoAdZoneId;
 
 		AdColony.configure(cordova.getActivity(), optionString, this.appId, zoneIds);
@@ -320,10 +320,10 @@ public class AdColonyPlugin extends CordovaPlugin {
 		AdColony.addV4VCListener(new MyAdColonyV4VCListener());
 	}
 
-	private void _showFullScreenAd() {
+	private void _showInterstitialAd() {
 	
-		AdColonyVideoAd ad = new AdColonyVideoAd(fullScreenAdZoneId);
-		ad.withListener(new AdColonyAdListenerFullScreenAd());
+		AdColonyVideoAd ad = new AdColonyVideoAd(interstitialAdZoneId);
+		ad.withListener(new AdColonyAdListenerInterstitialAd());
 		ad.show();
 	}
 
@@ -344,8 +344,8 @@ public class AdColonyPlugin extends CordovaPlugin {
 			Log.d(LOG_TAG, String.format("%s: %b", "onAdColonyAdAvailabilityChange", available));
 			
 			if (available) {
-				if(zone_id.equals(fullScreenAdZoneId)) {
-					PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdLoaded");
+				if(zone_id.equals(interstitialAdZoneId)) {
+					PluginResult pr = new PluginResult(PluginResult.Status.OK, "onInterstitialAdLoaded");
 					pr.setKeepCallback(true);
 					callbackContextKeepCallback.sendPluginResult(pr);
 					//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
@@ -383,12 +383,12 @@ public class AdColonyPlugin extends CordovaPlugin {
 		}		
 	}
 	
-	class AdColonyAdListenerFullScreenAd implements AdColonyAdListener {
+	class AdColonyAdListenerInterstitialAd implements AdColonyAdListener {
 		// Ad Started Callback, called only when an ad successfully starts playing.
 		public void onAdColonyAdStarted( AdColonyAd ad ) {
 			Log.d(LOG_TAG, String.format("%s", "onAdColonyAdStarted"));
 			
-			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdShown");
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onInterstitialAdShown");
 			pr.setKeepCallback(true);
 			callbackContextKeepCallback.sendPluginResult(pr);
 			//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
@@ -409,7 +409,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 			if (ad.shown()) {
 				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: shown"));
 				
-				PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdHidden");
+				PluginResult pr = new PluginResult(PluginResult.Status.OK, "onInterstitialAdHidden");
 				pr.setKeepCallback(true);
 				callbackContextKeepCallback.sendPluginResult(pr);
 				//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);

@@ -1,8 +1,8 @@
 
 module.exports = {
-	_loadedFullScreenAd: false,
+	_loadedInterstitialAd: false,
 	_loadedRewardedVideoAd: false,
-	_isShowingFullScreenAd: false,
+	_isShowingInterstitialAd: false,
 	_isShowingRewardedVideoAd: false,
 	//
 	setLicenseKey: function(email, licenseKey) {
@@ -15,7 +15,7 @@ module.exports = {
             [email, licenseKey]
         ); 
     },
-	setUp: function(appId, fullScreenAdZoneId, rewardedVideoAdZoneId) {
+	setUp: function(appId, InterstitialAdZoneId, rewardedVideoAdZoneId) {
 		var self = this;	
         cordova.exec(
 			function (result) {
@@ -23,24 +23,35 @@ module.exports = {
 				
 				if (typeof result == "string") {
 					//
-					if (result == "onFullScreenAdLoaded") {
-						self._loadedFullScreenAd = true;
-
+					if (result == "onInterstitialAdLoaded") {
+						self._loadedInterstitialAd = true;
+//cranberrygame start; deprecated
 						if (self.onFullScreenAdLoaded)
 							self.onFullScreenAdLoaded();
+//cranberrygame end						
+						if (self.onInterstitialAdLoaded)
+							self.onInterstitialAdLoaded();
 					}					
-					if (result == "onFullScreenAdShown") {
-						self._loadedFullScreenAd = false;
-						self._isShowingFullScreenAd = true;
-					
+					else if (result == "onInterstitialAdShown") {
+						self._loadedInterstitialAd = false;
+						self._isShowingInterstitialAd = true;
+
+//cranberrygame start; deprecated						
 						if (self.onFullScreenAdShown)
-							self.onFullScreenAdShown();
+							self.onFullScreenAdShown();	
+//cranberrygame end
+						if (self.onInterstitialAdShown)
+							self.onInterstitialAdShown();
 					}
-					else if (result == "onFullScreenAdHidden") {
-						self._isShowingFullScreenAd = false;
+					else if (result == "onInterstitialAdHidden") {
+						self._isShowingInterstitialAd = false;
 					
+//cranberrygame start; deprecated					
 						 if (self.onFullScreenAdHidden)
 							self.onFullScreenAdHidden();
+//cranberrygame end							
+						 if (self.onInterstitialAdHidden)
+							self.onInterstitialAdHidden();
 					}
 					//
 					else if (result == "onRewardedVideoAdLoaded") {
@@ -81,15 +92,26 @@ module.exports = {
 			},
             'AdColonyPlugin',
             'setUp',			
-			[appId, fullScreenAdZoneId, rewardedVideoAdZoneId]
+			[appId, InterstitialAdZoneId, rewardedVideoAdZoneId]
         ); 
     },
+//cranberrygame start; deprecated
     showFullScreenAd: function() {
 		cordova.exec(
  			null,
             null,
             'AdColonyPlugin',
             'showFullScreenAd',
+            []
+        ); 
+    },
+//cranberrygame end
+    showInterstitialAd: function() {
+		cordova.exec(
+ 			null,
+            null,
+            'AdColonyPlugin',
+            'showInterstitialAd',
             []
         ); 
     },
@@ -102,21 +124,36 @@ module.exports = {
             []
         ); 
     },
+//cranberrygame start; deprecated	
 	loadedFullScreenAd: function() {
-		return this._loadedFullScreenAd;
+		return this._loadedInterstitialAd;
+	},
+//cranberrygame end	
+	loadedInterstitialAd: function() {
+		return this._loadedInterstitialAd;
 	},
 	loadedRewardedVideoAd: function() {
 		return this._loadedRewardedVideoAd;
 	},
+//cranberrygame start; deprecated	
 	isShowingFullScreenAd: function() {
-		return this._isShowingFullScreenAd;
+		return this._isShowingInterstitialAd;
+	},
+//cranberrygame end	
+	isShowingInterstitialAd: function() {
+		return this._isShowingInterstitialAd;
 	},
 	isShowingRewardedVideoAd: function() {
 		return this._isShowingRewardedVideoAd;
 	},
+//cranberrygame start; deprecated
 	onFullScreenAdLoaded: null,
 	onFullScreenAdShown: null,
 	onFullScreenAdHidden: null,	
+//cranberrygame end	
+	onInterstitialAdLoaded: null,
+	onInterstitialAdShown: null,
+	onInterstitialAdHidden: null,	
 	//
 	onRewardedVideoAdLoaded: null,
 	onRewardedVideoAdShown: null,

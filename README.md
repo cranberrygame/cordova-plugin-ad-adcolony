@@ -68,22 +68,22 @@ http://www.adcolony.com/ - Login - MONETISATION - [specific app] -[specific zone
 # API #
 ```javascript
 var appId = "REPLACE_THIS_WITH_YOUR_APP_ID";
-var fullScreenAdZoneId = "REPLACE_THIS_WITH_YOUR_FULL_SCREEN_AD_ZONE_ID";
+var InterstitialAdZoneId = "REPLACE_THIS_WITH_YOUR_INTERSTITIAL_AD_ZONE_ID";
 var rewardedVideoAdZoneId = "REPLACE_THIS_WITH_YOUR_REWARDED_VIDEO_AD_ZONE_ID";
 /*
 var appId;
-var fullScreenAdZoneId;
+var interstitialAdZoneId;
 var rewardedVideoAdZoneId;
 //android
 if (navigator.userAgent.match(/Android/i)) {
 	appId = "REPLACE_THIS_WITH_YOUR_APP_ID";
-	fullScreenAdZoneId = "REPLACE_THIS_WITH_YOUR_FULL_SCREEN_AD_ZONE_ID";
+	interstitialAdZoneId = "REPLACE_THIS_WITH_YOUR_INTERSTITIAL_AD_ZONE_ID";
 	rewardedVideoAdZoneId = "REPLACE_THIS_WITH_YOUR_REWARDED_VIDEO_AD_ZONE_ID";
 }
 //ios
 else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
 	appId = "REPLACE_THIS_WITH_YOUR_APP_ID";
-	fullScreenAdZoneId = "REPLACE_THIS_WITH_YOUR_FULL_SCREEN_AD_ZONE_ID";
+	interstitialAdZoneId = "REPLACE_THIS_WITH_YOUR_INTERSTITIAL_AD_ZONE_ID";
 	rewardedVideoAdZoneId = "REPLACE_THIS_WITH_YOUR_REWARDED_VIDEO_AD_ZONE_ID";
 }
 */
@@ -93,17 +93,17 @@ document.addEventListener("deviceready", function(){
 	//you can get paid license key: https://cranberrygame.github.io/request_cordova_ad_plugin_paid_license_key
 	//window.adcolony.setLicenseKey("yourEmailId@yourEmaildDamin.com", "yourLicenseKey");
 
-	window.adcolony.setUp(appId, fullScreenAdZoneId, rewardedVideoAdZoneId);
+	window.adcolony.setUp(appId, interstitialAdZoneId, rewardedVideoAdZoneId);
 	
 	//
-	window.adcolony.onFullScreenAdLoaded = function() {
-		alert('onFullScreenAdLoaded');
+	window.adcolony.onInterstitialAdLoaded = function() {
+		alert('onInterstitialAdLoaded');
 	};	
-	window.adcolony.onFullScreenAdShown = function() {
-		alert('onFullScreenAdShown');
+	window.adcolony.onInterstitialAdShown = function() {
+		alert('onInterstitialAdShown');
 	};
-	window.adcolony.onFullScreenAdHidden = function() {
-		alert('onFullScreenAdHidden');
+	window.adcolony.onInterstitialAdHidden = function() {
+		alert('onInterstitialAdHidden');
 	};
 	//
 	window.adcolony.onRewardedVideoAdLoaded = function() {
@@ -120,14 +120,14 @@ document.addEventListener("deviceready", function(){
 	};
 }, false);
 
-window.adcolony.showFullScreenAd();
+window.adcolony.showInterstitialAd();
 
 window.adcolony.showRewardedVideoAd();
 
-alert(window.adcolony.loadedFullScreenAd());//boolean: true or false
+alert(window.adcolony.loadedInterstitialAd());//boolean: true or false
 alert(window.adcolony.loadedRewardedVideoAd());//boolean: true or false
 
-alert(window.adcolony.isShowingFullScreenAd());//boolean: true or false
+alert(window.adcolony.isShowingInterstitialAd());//boolean: true or false
 alert(window.adcolony.isShowingRewardedVideoAd());//boolean: true or false
 ```
 # Examples #

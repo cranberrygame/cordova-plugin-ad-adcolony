@@ -7,39 +7,39 @@
 <script>
 
 var appId = "appac261d5336d744f4ac";
-var fullScreenAdZoneId = "vzd855d463434d479086";
+var interstitialAdZoneId = "vzd855d463434d479086";
 var rewardedVideoAdZoneId = "vz58f9aa9efa6843118e";
 /*
 var appId;
-var fullScreenAdZoneId;
+var interstitialAdZoneId;
 var rewardedVideoAdZoneId;
 //android
 if (navigator.userAgent.match(/Android/i)) {
 	appId = "appac261d5336d744f4ac";
-	fullScreenAdZoneId = "vzd855d463434d479086";
+	interstitialAdZoneId = "vzd855d463434d479086";
 	rewardedVideoAdZoneId = "vz58f9aa9efa6843118e";
 }
 //ios
 else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
 	appId = "app4f5ecf3485da4883a0";
-	fullScreenAdZoneId = "vz18c31e8379614efc8e";
+	interstitialAdZoneId = "vz18c31e8379614efc8e";
 	rewardedVideoAdZoneId = "vzcc802258d4d34441b7";
 }
 */
 
 document.addEventListener("deviceready", function(){
 
-	window.adcolony.setUp(appId, fullScreenAdZoneId, rewardedVideoAdZoneId);
+	window.adcolony.setUp(appId, interstitialAdZoneId, rewardedVideoAdZoneId);
 	
 	//
-	window.adcolony.onFullScreenAdLoaded = function() {
-		alert('onFullScreenAdLoaded');
+	window.adcolony.onInterstitialAdLoaded = function() {
+		alert('onInterstitialAdLoaded');
 	};	
-	window.adcolony.onFullScreenAdShown = function() {
-		alert('onFullScreenAdShown');
+	window.adcolony.onInterstitialAdShown = function() {
+		alert('onInterstitialAdShown');
 	};
-	window.adcolony.onFullScreenAdHidden = function() {
-		alert('onFullScreenAdHidden');
+	window.adcolony.onInterstitialAdHidden = function() {
+		alert('onInterstitialAdHidden');
 	};
 	//
 	window.adcolony.onRewardedVideoAdLoaded = function() {
@@ -57,14 +57,14 @@ document.addEventListener("deviceready", function(){
 }, false);
 </script>
 
-<p><button onclick="window.adcolony.showFullScreenAd();">showFullScreenAd</button></p>
+<p><button onclick="window.adcolony.showInterstitialAd();">showInterstitialAd</button></p>
 <br>
 <p><button onclick="window.adcolony.showRewardedVideoAd();">showRewardedVideoAd</button></p>
 <br>
-<p><button onclick="alert(window.adcolony.loadedFullScreenAd());">loadedFullScreenAd</button></p>
+<p><button onclick="alert(window.adcolony.loadedInterstitialAd());">loadedInterstitialAd</button></p>
 <p><button onclick="alert(window.adcolony.loadedRewardedVideoAd());">loadedRewardedVideoAd</button></p>
 <br>
-<p><button onclick="alert(window.adcolony.isShowingFullScreenAd());">isShowingFullScreenAd</button></p>
+<p><button onclick="alert(window.adcolony.isShowingInterstitialAd());">isShowingInterstitialAd</button></p>
 <p><button onclick="alert(window.adcolony.isShowingRewardedVideoAd());">isShowingRewardedVideoAd</button></p>
 
 </body>

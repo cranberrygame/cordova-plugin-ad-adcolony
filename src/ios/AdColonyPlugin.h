@@ -14,12 +14,12 @@
 @property BOOL validLicenseKey;
 //
 @property NSString *appId;
-@property NSString *fullScreenAdZoneId;
+@property NSString *interstitialAdZoneId;
 @property NSString *rewardedVideoAdZoneId;
 	
 - (void) setLicenseKey: (CDVInvokedUrlCommand*)command;
 - (void) setUp:(CDVInvokedUrlCommand*)command;
-- (void) showFullScreenAd:(CDVInvokedUrlCommand*)command;
+- (void) showInterstitialAd:(CDVInvokedUrlCommand*)command;
 - (void) showRewardedVideoAd:(CDVInvokedUrlCommand*)command;
 
 @end
@@ -32,7 +32,7 @@
 
 @end
 
-@interface AdColonyAdDelegateFullScreenAd : NSObject <AdColonyAdDelegate>
+@interface AdColonyAdDelegateInterstitialAd : NSObject <AdColonyAdDelegate>
 
 @property AdColonyPlugin *adColonyPlugin;
 

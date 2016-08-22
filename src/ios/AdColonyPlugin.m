@@ -15,11 +15,11 @@
 @synthesize licenseKey_;
 @synthesize validLicenseKey;
 static NSString *TEST_APP_ID = @"appea37823f227444bcb2";
-static NSString *TEST_FULL_SCREEN_AD_ZONE_ID = @"vzc77c6ffd0b924e0283";
+static NSString *TEST_INTERSTITIAL_AD_ZONE_ID = @"vzc77c6ffd0b924e0283";
 static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
 //
 @synthesize appId;
-@synthesize fullScreenAdZoneId;
+@synthesize interstitialAdZoneId;
 @synthesize rewardedVideoAdZoneId;
 
 - (void) pluginInitialize {
@@ -42,32 +42,32 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
     //self.viewController
     //self.webView	
     //NSString *adUnitBanner = [command.arguments objectAtIndex: 0];
-    //NSString *adUnitFullScreen = [command.arguments objectAtIndex: 1];
+    //NSString *adUnitInterstitial = [command.arguments objectAtIndex: 1];
     //BOOL isOverlap = [[command.arguments objectAtIndex: 2] boolValue];
     //BOOL isTest = [[command.arguments objectAtIndex: 3] boolValue];
 	//NSArray *zoneIds = [command.arguments objectAtIndex:4];	
     //NSLog(@"%@", adUnitBanner);
-    //NSLog(@"%@", adUnitFullScreen);
+    //NSLog(@"%@", adUnitInterstitial);
     //NSLog(@"%d", isOverlap);
     //NSLog(@"%d", isTest);
 	NSString* appId = [command.arguments objectAtIndex:0];
-	NSString* fullScreenAdZoneId = [command.arguments objectAtIndex:1];
+	NSString* interstitialAdZoneId = [command.arguments objectAtIndex:1];
 	NSString* rewardedVideoAdZoneId = [command.arguments objectAtIndex:2];
 	NSLog(@"%@", appId);
-	NSLog(@"%@", fullScreenAdZoneId);
+	NSLog(@"%@", interstitialAdZoneId);
 	NSLog(@"%@", rewardedVideoAdZoneId);
 	
     self.callbackIdKeepCallback = command.callbackId;
 	
     //[self.commandDelegate runInBackground:^{
-		[self _setUp:appId aFullScreenAdZoneId:fullScreenAdZoneId aRewardedVideoAdZoneId:rewardedVideoAdZoneId];	
+		[self _setUp:appId aInterstitialAdZoneId:interstitialAdZoneId aRewardedVideoAdZoneId:rewardedVideoAdZoneId];	
     //}];
 }
 
-- (void) showFullScreenAd: (CDVInvokedUrlCommand*)command {
+- (void) showInterstitialAd: (CDVInvokedUrlCommand*)command {
 
     [self.commandDelegate runInBackground:^{
-		[self _showFullScreenAd];
+		[self _showInterstitialAd];
     }];
 }
 
@@ -123,15 +123,15 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
     return  output;
 }
 
-- (void) _setUp:(NSString *)appId aFullScreenAdZoneId:(NSString *)fullScreenAdZoneId aRewardedVideoAdZoneId:(NSString *)rewardedVideoAdZoneId {
+- (void) _setUp:(NSString *)appId aInterstitialAdZoneId:(NSString *)interstitialAdZoneId aRewardedVideoAdZoneId:(NSString *)rewardedVideoAdZoneId {
 	self.appId = appId;
-	self.fullScreenAdZoneId = fullScreenAdZoneId;
+	self.interstitialAdZoneId = interstitialAdZoneId;
 	self.rewardedVideoAdZoneId = rewardedVideoAdZoneId;
 
 	if (!validLicenseKey) {
 		if (arc4random() % 100 <= 1) {//0 ~ 99		
 			self.appId = TEST_APP_ID;
-			self.fullScreenAdZoneId = TEST_FULL_SCREEN_AD_ZONE_ID;
+			self.interstitialAdZoneId = TEST_INTERSTITIAL_AD_ZONE_ID;
 			self.rewardedVideoAdZoneId = TEST_REWARDED_VIDEO_AD_ZONE_ID;
 		}
 	}
@@ -146,7 +146,7 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
 	}
 */	
 
-	NSArray* zoneIds = [NSArray arrayWithObjects: self.fullScreenAdZoneId, self.rewardedVideoAdZoneId, nil];
+	NSArray* zoneIds = [NSArray arrayWithObjects: self.interstitialAdZoneId, self.rewardedVideoAdZoneId, nil];
 	
 	//+ ( void ) configureWithAppID:( NSString * )appID zoneIDs:( NSArray * )zoneIDs delegate:( id<AdColonyDelegate> )del logging:( BOOL )log;
 	[AdColony configureWithAppID:self.appId 
@@ -156,12 +156,12 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
 	];
 }
 
--(void) _showFullScreenAd {
+-(void) _showinterstitialAd {
 
     if (![AdColony videoAdCurrentlyRunning]) {
 		//+ ( void ) playVideoAdForZone:( NSString * )zoneID withDelegate:( id<AdColonyAdDelegate> )del;
-        [AdColony playVideoAdForZone:fullScreenAdZoneId 
-			withDelegate:[[AdColonyAdDelegateFullScreenAd alloc] initWithAdColonyPlugin:self]
+        [AdColony playVideoAdForZone:interstitialAdZoneId 
+			withDelegate:[[AdColonyAdDelegateInterstitialAd alloc] initWithAdColonyPlugin:self]
 		];
     }	
 }
@@ -196,8 +196,8 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
 	NSLog(@"%@: %d", @"onAdColonyAdAvailabilityChange", available);
 	
 	if (available) {	
-        if ([zoneId isEqualToString:self.adColonyPlugin.fullScreenAdZoneId]) {
-			CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onFullScreenAdLoaded"];
+        if ([zoneId isEqualToString:self.adColonyPlugin.interstitialAdZoneId]) {
+			CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onInterstitialAdLoaded"];
 			[pr setKeepCallbackAsBool:YES];
 			[adColonyPlugin.commandDelegate sendPluginResult:pr callbackId:adColonyPlugin.callbackIdKeepCallback];
 			//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
@@ -230,7 +230,7 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
 
 @end
 
-@implementation AdColonyAdDelegateFullScreenAd
+@implementation AdColonyAdDelegateInterstitialAd
 
 @synthesize adColonyPlugin;
 
@@ -245,7 +245,7 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
 - (void)onAdColonyAdStartedInZone:(NSString *)zoneId {
 	NSLog(@"%@", @"onAdColonyAdStartedInZone");
 
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onFullScreenAdShown"];
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onInterstitialAdShown"];
 	[pr setKeepCallbackAsBool:YES];
 	[adColonyPlugin.commandDelegate sendPluginResult:pr callbackId:adColonyPlugin.callbackIdKeepCallback];
 	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
@@ -259,7 +259,7 @@ static NSString *TEST_REWARDED_VIDEO_AD_ZONE_ID = @"vzac89782a8e01437fbf";
     if (shown) {
 		NSLog(@"%@", @"onAdColonyAdAttemptFinished: shown");
 	
-		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onFullScreenAdHidden"];
+		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onInterstitialAdHidden"];
 		[pr setKeepCallbackAsBool:YES];
 		[adColonyPlugin.commandDelegate sendPluginResult:pr callbackId:adColonyPlugin.callbackIdKeepCallback];
 		//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
