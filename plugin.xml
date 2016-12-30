@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="cordova-plugin-ad-adcolony"
-    version="1.0.43">
+    version="1.0.44">
 	
     <name>Cordova AdColony plugin</name>
     <description>Show adcolony interstitial ad and rewarded video ad</description>
@@ -40,7 +40,17 @@
 
 		<source-file src="src/android/AdColonyPlugin.java" target-dir="src/com/cranberrygame/cordova/plugin/ad/adcolony" />
 		
-		<source-file src="src/android/adcolony.jar" target-dir="libs" />
+		<source-file src="src/android/adcolony.jar" target-dir="libs" />		
+        <source-file src="src/android/arm64-v8a/libadcolony.so" target-dir="libs/arm64-v8a" />		
+        <source-file src="src/android/arm64-v8a/libjs.so" target-dir="libs/arm64-v8a" />		
+        <source-file src="src/android/armeabi/libadcolony.so" target-dir="libs/armeabi" />		
+        <source-file src="src/android/armeabi/libjs.so" target-dir="libs/armeabi" />		
+        <source-file src="src/android/armeabi-v7a/libadcolony.so" target-dir="libs/armeabi-v7a" />		
+        <source-file src="src/android/armeabi-v7a/libjs.so" target-dir="libs/armeabi-v7a" />		
+        <source-file src="src/android/x86/libadcolony.so" target-dir="libs/x86" />		
+        <source-file src="src/android/x86/libjs.so" target-dir="libs/x86" />	
+        <source-file src="src/android/x86_64/libadcolony.so" target-dir="libs/x86_64" />		
+        <source-file src="src/android/x86_64/libjs.so" target-dir="libs/x86_64" />		
 	</platform>
 
 	<!-- ios -->
