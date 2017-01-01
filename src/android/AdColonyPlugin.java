@@ -16,7 +16,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.util.Log;
 //
-import com.jirbo.adcolony.*;
+import com.adcolony.sdk.*;
 import org.apache.cordova.PluginResult.Status;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -309,33 +309,54 @@ public class AdColonyPlugin extends CordovaPlugin {
 		catch (JSONException exception) {
 			// Do nothing
 		}
-*/
-
+*/        
+				
 		String[] zoneIds = new String[2];
 		zoneIds[0] = this.interstitialAdZoneId;
 		zoneIds[1] = this.rewardedVideoAdZoneId;
 
-		AdColony.configure(cordova.getActivity(), optionString, this.appId, zoneIds);
-		AdColony.addAdAvailabilityListener(new MyAdColonyAdAvailabilityListener());
-		AdColony.addV4VCListener(new MyAdColonyV4VCListener());
+		//AdColony.configure(cordova.getActivity(), optionString, this.appId, zoneIds);
+		//AdColony.addAdAvailabilityListener(new MyAdColonyAdAvailabilityListener());
+		//AdColony.addV4VCListener(new MyAdColonyV4VCListener());
+		AdColonyAppOptions app_options = new AdColonyAppOptions().setUserID( "unique_user_id" );
+		AdColony.configure(cordova.getActivity(),app_options, this.appId, zoneIds);
+		AdColony.addAdAvailabilityListener(new MyAdColonyAdAvailabilityListener());	
+		AdColony.setRewardListener(new	MyAdColonyRewardListener());		
 	}
 
 	private void _showInterstitialAd() {
 	
-		AdColonyVideoAd ad = new AdColonyVideoAd(interstitialAdZoneId);
-		ad.withListener(new AdColonyAdListenerInterstitialAd());
-		ad.show();
+//		AdColonyVideoAd ad = new AdColonyVideoAd(interstitialAdZoneId);
+//		ad.withListener(new AdColonyAdListenerInterstitialAd());
+//		ad.show();
+		AdColonyAdOptions ad_options;
+        AdColonyUserMetadata metadata = new AdColonyUserMetadata()
+                .setUserAge( 26 )
+                .setUserEducation( AdColonyUserMetadata.USER_EDUCATION_BACHELORS_DEGREE )
+                .setUserGender( AdColonyUserMetadata.USER_MALE );
+        ad_options = new AdColonyAdOptions()
+				.setUserMetadata(metadata);		
+		AdColony.requestInterstitial(interstitialAdZoneId, new MyAdColonyInterstitialListenerInterstitialAd(), ad_options );
 	}
 
 	private void _showRewardedVideoAd() {
 		
-		AdColonyV4VCAd ad = new AdColonyV4VCAd(rewardedVideoAdZoneId);
-		ad.withListener(new AdColonyAdListenerRewardedVideoAd());
-		//ad.withConfirmationDialog().withResultsDialog();
-		ad.show();
-		
-		//ad.getRewardName()
-		//ad.getAvailableViews()
+//		AdColonyV4VCAd ad = new AdColonyV4VCAd(rewardedVideoAdZoneId);
+//		ad.withListener(new AdColonyAdListenerRewardedVideoAd());
+//		//ad.withConfirmationDialog().withResultsDialog();
+//		ad.show();
+//		//ad.getRewardName()
+//		//ad.getAvailableViews()
+		AdColonyAdOptions ad_options;
+        AdColonyUserMetadata metadata = new AdColonyUserMetadata()
+                .setUserAge( 26 )
+                .setUserEducation( AdColonyUserMetadata.USER_EDUCATION_BACHELORS_DEGREE )
+                .setUserGender( AdColonyUserMetadata.USER_MALE );
+        ad_options = new AdColonyAdOptions()
+                .enableConfirmationDialog( true )
+                .enableResultsDialog( true )
+                .setUserMetadata( metadata );        			
+		AdColony.requestInterstitial(rewardedVideoAdZoneId, new MyAdColonyInterstitialListenerRewardedVideoAd(), ad_options );
 	}
 	
 	class MyAdColonyAdAvailabilityListener implements AdColonyAdAvailabilityListener {
@@ -364,10 +385,12 @@ public class AdColonyPlugin extends CordovaPlugin {
 		}
 	}
 
-	class MyAdColonyV4VCListener implements AdColonyV4VCListener {
-		// Reward Callback
-		public void onAdColonyV4VCReward(AdColonyV4VCReward reward) {
-			Log.d(LOG_TAG, String.format("%s: %b", "onAdColonyV4VCReward", reward.success()));
+	class MyAdColonyRewardListener implements AdColonyRewardListener {
+
+		@Override
+		public void onReward( AdColonyReward reward )
+		{
+			Log.d(LOG_TAG, String.format("%s: %b", "onReward", reward.success()));
 			
 			if (reward.success()) {				
 				//reward.name();
@@ -383,99 +406,99 @@ public class AdColonyPlugin extends CordovaPlugin {
 		}		
 	}
 	
-	class AdColonyAdListenerInterstitialAd implements AdColonyAdListener {
-		// Ad Started Callback, called only when an ad successfully starts playing.
-		public void onAdColonyAdStarted( AdColonyAd ad ) {
-			Log.d(LOG_TAG, String.format("%s", "onAdColonyAdStarted"));
+	class MyAdColonyInterstitialListenerInterstitialAd implements AdColonyInterstitialListener {
+		
+		/** Ad passed back in request filled callback, ad can now be shown */
+		@Override
+		public void onRequestFilled( AdColonyInterstitial ad )
+		{
+			Log.d(LOG_TAG, String.format("%s", "onRequestFilled"));
+			ad.show();
+		}
+
+		/** Ad request was not filled */
+		@Override
+		public void onRequestNotFilled( AdColonyZone zone )
+		{
+			Log.d(LOG_TAG, String.format("%s", "onRequestNotFilled"));
+		}
+
+		/** Ad opened, reset UI to reflect state change */
+		@Override
+		public void onOpened( AdColonyInterstitial ad )
+		{
+			Log.d(LOG_TAG, String.format("%s", "onOpened"));
 			
 			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onInterstitialAdShown");
 			pr.setKeepCallback(true);
 			callbackContextKeepCallback.sendPluginResult(pr);
 			//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
 			//pr.setKeepCallback(true);
-			//callbackContextKeepCallback.sendPluginResult(pr);			
+			//callbackContextKeepCallback.sendPluginResult(pr);		
 		}
-  
-		//Ad Attempt Finished Callback - called at the end of any ad attempt - successful or not.
-		public void onAdColonyAdAttemptFinished(AdColonyAd ad) {
-			Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished"));			
 
-			// You can ping the AdColonyAd object here for more information:
-			// ad.shown() - returns true if the ad was successfully shown.
-			// ad.notShown() - returns true if the ad was not shown at all (i.e. if onAdColonyAdStarted was never triggered)
-			// ad.skipped() - returns true if the ad was skipped due to an interval play setting
-			// ad.canceled() - returns true if the ad was cancelled (either programmatically or by the user)
-			// ad.noFill() - returns true if the ad was not shown due to no ad fill.
-			if (ad.shown()) {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: shown"));
-				
-				PluginResult pr = new PluginResult(PluginResult.Status.OK, "onInterstitialAdHidden");
-				pr.setKeepCallback(true);
-				callbackContextKeepCallback.sendPluginResult(pr);
-				//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
-				//pr.setKeepCallback(true);
-				//callbackContextKeepCallback.sendPluginResult(pr);				
-			}
-			else if (ad.notShown()) {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: notShown"));			
-			} 
-			else if (ad.noFill()) {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: noFill"));			
-			} 
-			else if (ad.canceled()) {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: canceled"));			
-			} 
-			else {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: else"));			
-			}
+		/** Request a new ad if ad is expiring */
+		@Override
+		public void onExpiring( AdColonyInterstitial ad )
+		{
+			AdColony.requestInterstitial( ZONE_ID, this, ad_options );//
+
+			Log.d(LOG_TAG, String.format("%s", "onExpiring"));
+			
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onInterstitialAdHidden");
+			pr.setKeepCallback(true);
+			callbackContextKeepCallback.sendPluginResult(pr);
+			//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+			//pr.setKeepCallback(true);
+			//callbackContextKeepCallback.sendPluginResult(pr);	
 		}
 	}
 
-	class AdColonyAdListenerRewardedVideoAd implements AdColonyAdListener {
-		// Ad Started Callback, called only when an ad successfully starts playing.
-		public void onAdColonyAdStarted( AdColonyAd ad ) {
-			Log.d(LOG_TAG, String.format("%s", "onAdColonyAdStarted"));
+	class MyAdColonyInterstitialListenerRewardedVideoAd implements AdColonyInterstitialListener {
+		
+		/** Ad passed back in request filled callback, ad can now be shown */
+		@Override
+		public void onRequestFilled( AdColonyInterstitial ad )
+		{
+			Log.d(LOG_TAG, String.format("%s", "onRequestFilled"));
+			ad.show();
+		}
+
+		/** Ad request was not filled */
+		@Override
+		public void onRequestNotFilled( AdColonyZone zone )
+		{
+			Log.d(LOG_TAG, String.format("%s", "onRequestNotFilled"));
+		}
+
+		/** Ad opened, reset UI to reflect state change */
+		@Override
+		public void onOpened( AdColonyInterstitial ad )
+		{
+			Log.d(LOG_TAG, String.format("%s", "onOpened"));
 			
 			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onRewardedVideoAdShown");
 			pr.setKeepCallback(true);
 			callbackContextKeepCallback.sendPluginResult(pr);
 			//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
 			//pr.setKeepCallback(true);
-			//callbackContextKeepCallback.sendPluginResult(pr);			
+			//callbackContextKeepCallback.sendPluginResult(pr);	
 		}
-  
-		//Ad Attempt Finished Callback - called at the end of any ad attempt - successful or not.
-		public void onAdColonyAdAttemptFinished(AdColonyAd ad) {
-			Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished"));			
 
-			// You can ping the AdColonyAd object here for more information:
-			// ad.shown() - returns true if the ad was successfully shown.
-			// ad.notShown() - returns true if the ad was not shown at all (i.e. if onAdColonyAdStarted was never triggered)
-			// ad.skipped() - returns true if the ad was skipped due to an interval play setting
-			// ad.canceled() - returns true if the ad was cancelled (either programmatically or by the user)
-			// ad.noFill() - returns true if the ad was not shown due to no ad fill.
-			if (ad.shown()) {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: shown"));
-				
-				PluginResult pr = new PluginResult(PluginResult.Status.OK, "onRewardedVideoAdHidden");
-				pr.setKeepCallback(true);
-				callbackContextKeepCallback.sendPluginResult(pr);
-				//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
-				//pr.setKeepCallback(true);
-				//callbackContextKeepCallback.sendPluginResult(pr);				
-			}
-			else if (ad.notShown()) {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: notShown"));			
-			} 
-			else if (ad.noFill()) {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: noFill"));			
-			} 
-			else if (ad.canceled()) {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: canceled"));			
-			} 
-			else {
-				Log.d(LOG_TAG, String.format("%s", "onAdColonyAdAttemptFinished: else"));			
-			}
-		}
+		/** Request a new ad if ad is expiring */
+		@Override
+		public void onExpiring( AdColonyInterstitial ad )
+		{
+			AdColony.requestInterstitial( ZONE_ID, this, ad_options );//
+	
+			Log.d(LOG_TAG, String.format("%s", "onExpiring"));
+			
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onRewardedVideoAdHidden");
+			pr.setKeepCallback(true);
+			callbackContextKeepCallback.sendPluginResult(pr);
+			//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+			//pr.setKeepCallback(true);
+			//callbackContextKeepCallback.sendPluginResult(pr);	
+		}		
 	}
 }
