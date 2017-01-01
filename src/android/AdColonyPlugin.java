@@ -120,13 +120,11 @@ public class AdColonyPlugin extends CordovaPlugin {
 	@Override
 	public void onPause(boolean multitasking) {
 		super.onPause(multitasking);
-		AdColony.pause();
 	}
 	
 	@Override
 	public void onResume(boolean multitasking) {
 		super.onResume(multitasking);
-		AdColony.resume(cordova.getActivity());
 	}
 	
 	//@Override
@@ -359,7 +357,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 		AdColony.requestInterstitial(rewardedVideoAdZoneId, new MyAdColonyInterstitialListenerRewardedVideoAd(), ad_options );
 	}
 	
-	class MyAdColonyAdAvailabilityListener implements AdColonyAdAvailabilityListener {
+	class MyAdColonyAdAvailabilityListener extends AdColonyAdAvailabilityListener {
 		// Ad Availability Change Callback - update button text
 		public void onAdColonyAdAvailabilityChange(boolean available, String zone_id) {
 			Log.d(LOG_TAG, String.format("%s: %b", "onAdColonyAdAvailabilityChange", available));
@@ -385,7 +383,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 		}
 	}
 
-	class MyAdColonyRewardListener implements AdColonyRewardListener {
+	class MyAdColonyRewardListener extends AdColonyRewardListener {
 
 		@Override
 		public void onReward( AdColonyReward reward )
@@ -406,11 +404,11 @@ public class AdColonyPlugin extends CordovaPlugin {
 		}		
 	}
 	
-	class MyAdColonyInterstitialListenerInterstitialAd implements AdColonyInterstitialListener {
+	class MyAdColonyInterstitialListenerInterstitialAd extends AdColonyInterstitialListener {
 		
 		/** Ad passed back in request filled callback, ad can now be shown */
 		@Override
-		public void onRequestFilled( AdColonyInterstitial ad )
+		public void onRequestFilled( AdColonyInterstitial adextends )
 		{
 			Log.d(LOG_TAG, String.format("%s", "onRequestFilled"));
 			ad.show();
@@ -454,7 +452,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 		}
 	}
 
-	class MyAdColonyInterstitialListenerRewardedVideoAd implements AdColonyInterstitialListener {
+	class MyAdColonyInterstitialListenerRewardedVideoAd extends AdColonyInterstitialListener {
 		
 		/** Ad passed back in request filled callback, ad can now be shown */
 		@Override
