@@ -318,7 +318,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 		//AdColony.addV4VCListener(new MyAdColonyV4VCListener());
 		AdColonyAppOptions app_options = new AdColonyAppOptions().setUserID( "unique_user_id" );
 		AdColony.configure(cordova.getActivity(),app_options, this.appId, zoneIds);
-		AdColony.addAdAvailabilityListener(new MyAdColonyAdAvailabilityListener());	
+//		AdColony.addAdAvailabilityListener(new MyAdColonyAdAvailabilityListener());	
 		AdColony.setRewardListener(new	MyAdColonyRewardListener());		
 	}
 
@@ -357,6 +357,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 		AdColony.requestInterstitial(rewardedVideoAdZoneId, new MyAdColonyInterstitialListenerRewardedVideoAd(), ad_options );
 	}
 	
+/*
 	class MyAdColonyAdAvailabilityListener extends AdColonyAdAvailabilityListener {
 		// Ad Availability Change Callback - update button text
 		public void onAdColonyAdAvailabilityChange(boolean available, String zone_id) {
@@ -382,8 +383,9 @@ public class AdColonyPlugin extends CordovaPlugin {
 			}
 		}
 	}
+*/
 
-	class MyAdColonyRewardListener extends AdColonyRewardListener {
+	class MyAdColonyRewardListener implements AdColonyRewardListener {
 
 		@Override
 		public void onReward( AdColonyReward reward )
@@ -408,7 +410,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 		
 		/** Ad passed back in request filled callback, ad can now be shown */
 		@Override
-		public void onRequestFilled( AdColonyInterstitial adextends )
+		public void onRequestFilled( AdColonyInterstitial ad )
 		{
 			Log.d(LOG_TAG, String.format("%s", "onRequestFilled"));
 			ad.show();
@@ -439,7 +441,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 		@Override
 		public void onExpiring( AdColonyInterstitial ad )
 		{
-			AdColony.requestInterstitial( ZONE_ID, this, ad_options );//
+//			AdColony.requestInterstitial( ZONE_ID, this, ad_options );//
 
 			Log.d(LOG_TAG, String.format("%s", "onExpiring"));
 			
@@ -487,7 +489,7 @@ public class AdColonyPlugin extends CordovaPlugin {
 		@Override
 		public void onExpiring( AdColonyInterstitial ad )
 		{
-			AdColony.requestInterstitial( ZONE_ID, this, ad_options );//
+//			AdColony.requestInterstitial( ZONE_ID, this, ad_options );//
 	
 			Log.d(LOG_TAG, String.format("%s", "onExpiring"));
 			
